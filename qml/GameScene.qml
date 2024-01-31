@@ -158,20 +158,46 @@ Scene {
   // on desktops, you can move the player with the arrow keys, on mobiles we are using our custom inputs above to modify the controller axis values. With this approach, we only need one actual logic for the movement, always referring to the axis values of the controller
   Keys.forwardTo: controller
   TwoAxisController {
-    id: controller
-    onInputActionPressed: (actionName, isPressed) => {
-      console.debug("key pressed actionName " + actionName)
-      if(actionName == "up") {
-        player.jump()
+      id: controller
+      onInputActionPressed: (actionName, isPressed) => {
+          console.log("key pressed actionName " + actionName +"ispressed: "+isPressed)
+          if(actionName === "up") {
+              player.jump()
+          } else if (actionName === "shift" && player.state == "walking") {
+              player.boostSpeed = true
+          } else if (actionName === "ctrl") {
+              if (isPressed) {
+                  player.dash()
+              }
+          }
       }
-    }
-    inputActionsToKeyCode: {
-        "up": Qt.Key_W,
-        "down": Qt.Key_S,
-        "left": Qt.Key_A,
-        "right": Qt.Key_D,
-        "fire": Qt.Key_Space
-    }
+      onInputActionReleased: {
+        if (actionName === "shift") {
+            player.boostSpeed = false
+        }
+      }
+
+      inputActionsToKeyCode: {
+          "up": Qt.Key_W,
+          "down": Qt.Key_S,
+          "left": Qt.Key_A,
+          "right": Qt.Key_D,
+          "space": Qt.Key_Space,
+          "shift": Qt.Key_Shift,
+          "ctrl": Qt.Key_Control
+      }
+  }
+//  ItemEditor {
+//    id: itemEditor
+//    opacity: 0.7
+//    z:1
+//    // start visible
+//  }
+  MouseArea {
+      anchors.fill: parent
+      onClicked: {
+          player.shootTo(mouseX, mouseY)
+      }
   }
 }
 
