@@ -48,6 +48,9 @@ Scene {
     width: level.width
     anchors.bottom: gameScene.gameWindowAnchorItem.bottom
     x: player.x > offsetBeforeScrollingStarts ? offsetBeforeScrollingStarts-player.x : 0
+    onXChanged: {
+        console.log("\n X"+x)
+    }
 
     PhysicsWorld {
       id: physicsWorld
@@ -197,7 +200,7 @@ Scene {
   MouseArea {
       anchors.fill: parent
       onClicked: {
-          player.shootTo(mouseX, mouseY)
+          player.shootTo(mouseX-viewPort.x, mouseY)
       }
       onPressed: {
           // Start shooting when mouse button is pressed
@@ -211,10 +214,8 @@ Scene {
           id: autoShootTimer
           interval: 100  // Set the interval based on your desired shooting rate
           repeat: true
-
           onTriggered: {
-
-              player.shootTo(parent.mouseX, parent.mouseY)  // Adjust the target position as needed
+              player.shootTo(parent.mouseX-viewPort.x, parent.mouseY)
           }
       }
   }
