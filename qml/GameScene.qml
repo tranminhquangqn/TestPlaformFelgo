@@ -10,6 +10,7 @@ Scene {
   height: 320
   gridSize: 32
 
+
   property int offsetBeforeScrollingStarts: 240
 
   EntityManager {
@@ -160,7 +161,7 @@ Scene {
   TwoAxisController {
       id: controller
       onInputActionPressed: (actionName, isPressed) => {
-          console.log("key pressed actionName " + actionName +"ispressed: "+isPressed)
+          //console.log("key pressed actionName " + actionName +"ispressed: "+isPressed)
           if(actionName === "up") {
               player.jump()
           } else if (actionName === "shift" && player.state == "walking") {
@@ -198,6 +199,25 @@ Scene {
       onClicked: {
           player.shootTo(mouseX, mouseY)
       }
+      onPressed: {
+          // Start shooting when mouse button is pressed
+          autoShootTimer.start()
+      }
+      onReleased: {
+          // Stop shooting when mouse button is released
+          autoShootTimer.stop()
+      }
+      Timer {
+          id: autoShootTimer
+          interval: 100  // Set the interval based on your desired shooting rate
+          repeat: true
+
+          onTriggered: {
+
+              player.shootTo(parent.mouseX, parent.mouseY)  // Adjust the target position as needed
+          }
+      }
   }
+
 }
 
