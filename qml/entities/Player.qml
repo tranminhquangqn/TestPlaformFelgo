@@ -107,7 +107,6 @@ EntityBase {
   property real shotSpeed: 500
   function shootTo(targetX, targetY) {
       var bulletComponent = Qt.createComponent("Bullet.qml")
-
       if (bulletComponent.status === Component.Ready) {
           var bullet = bulletComponent.createObject(player.parent)
           if (bullet) {
@@ -116,7 +115,7 @@ EntityBase {
               var directionY = (targetY - player.y) / Math.sqrt((targetX - player.x) * (targetX - player.x) + (targetY - player.y) * (targetY - player.y))
 
               // Set initial position and velocity
-              bullet.init(player.x, player.y-100, directionX * player.shotSpeed, directionY * player.shotSpeed)
+              bullet.init(player.x+player.width/2, player.y+player.height/2, directionX * player.shotSpeed, directionY * player.shotSpeed)
           }
       } else {
           console.error("Error loading Bullet component:", bulletComponent.errorString())
