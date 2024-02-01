@@ -5,7 +5,7 @@ EntityBase {
   id: bullet
   entityType: "bullet"
   width: 10
-  height: 5
+  height: 10
   z:-1
   rotation: Math.atan2(collider.linearVelocity.y, collider.linearVelocity.x) * 180 / Math.PI
   Rectangle {
@@ -20,6 +20,10 @@ EntityBase {
     bodyType: Body.Dynamic
     fixedRotation: false
     bullet: true
+
+    restitution : 0.3
+    gravityScale: 0
+
     categories: Box.Category3
     collidesWith: Box.Category2
   }

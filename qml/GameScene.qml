@@ -20,7 +20,8 @@ Scene {
   // the whole screen is filled with an incredibly beautiful blue ...
   Rectangle {
     anchors.fill: gameScene.gameWindowAnchorItem
-    color: "#74d6f7"
+    //color: "#74d6f7"
+    color:"black"
   }
 
   // ... followed by 2 parallax layers with trees and grass
@@ -54,7 +55,7 @@ Scene {
 
     PhysicsWorld {
       id: physicsWorld
-      gravity: Qt.point(0, 25)
+      gravity: Qt.point(0, 30)
       debugDrawVisible: false // enable this for physics debugging
       z: 1000
 
@@ -167,6 +168,8 @@ Scene {
           //console.log("key pressed actionName " + actionName +"ispressed: "+isPressed)
           if(actionName === "up") {
               player.jump()
+          } else if(actionName === "down") {
+                player.isProne=true
           } else if (actionName === "shift" && player.state == "walking") {
               player.boostSpeed = true
           } else if (actionName === "ctrl") {
@@ -178,6 +181,8 @@ Scene {
       onInputActionReleased: {
         if (actionName === "shift") {
             player.boostSpeed = false
+        }else if(actionName === "down") {
+            player.isProne=false
         }
       }
 
@@ -186,6 +191,7 @@ Scene {
           "down": Qt.Key_S,
           "left": Qt.Key_A,
           "right": Qt.Key_D,
+          "drop": Qt.Key_X,
           "space": Qt.Key_Space,
           "shift": Qt.Key_Shift,
           "ctrl": Qt.Key_Control

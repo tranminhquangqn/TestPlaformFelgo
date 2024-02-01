@@ -13,6 +13,15 @@ EntityBase {
   property real xAccelerate: 1.2
 
   property bool boostSpeed: false
+  property bool isProne: false
+  onIsProneChanged: {
+      if(isProne){
+          player.height=25
+      }else{
+          player.height=50
+      }
+  }
+
   property int jumpCount: 0
 
   // the contacts property is used to determine if the player is in touch with any solid objects (like ground or platform), because in this case the player is walking, which enables the ability to jump. contacts > 0 --> walking state
@@ -23,7 +32,9 @@ EntityBase {
 
   // here you could use a SpriteSquenceVPlay to animate your player
   MultiResolutionImage {
+    anchors.fill: parent
     source: Qt.resolvedUrl("../../assets/player/run.png")
+    fillMode :Image.Stretch
   }
 
   BoxCollider {
@@ -105,14 +116,36 @@ EntityBase {
 //    }
 //  }
   property real shotSpeed: 500
+//  function shootTo(targetX, targetY) {
+//      var bulletComponent = Qt.createComponent("Bullet.qml")
+//      if (bulletComponent.status === Component.Ready) {
+//          var bullet = bulletComponent.createObject(player.parent)
+//          if (bullet) {
+//              // Calculate the direction towards the mouse position
+//              var directionX = (targetX - player.x) / Math.sqrt((targetX - player.x) * (targetX - player.x) + (targetY - player.y) * (targetY - player.y))
+//              var directionY = (targetY - player.y) / Math.sqrt((targetX - player.x) * (targetX - player.x) + (targetY - player.y) * (targetY - player.y))
+
+//              // Set initial position and velocity
+//              bullet.init(player.x+player.width/2, player.y+player.height/2, directionX * player.shotSpeed, directionY * player.shotSpeed)
+//          }
+//      } else {
+//          console.error("Error loading Bullet component:", bulletComponent.errorString())
+//      }
+//  }
   function shootTo(targetX, targetY) {
       var bulletComponent = Qt.createComponent("Bullet.qml")
+
       if (bulletComponent.status === Component.Ready) {
           var bullet = bulletComponent.createObject(player.parent)
           if (bullet) {
               // Calculate the direction towards the mouse position
-              var directionX = (targetX - player.x) / Math.sqrt((targetX - player.x) * (targetX - player.x) + (targetY - player.y) * (targetY - player.y))
-              var directionY = (targetY - player.y) / Math.sqrt((targetX - player.x) * (targetX - player.x) + (targetY - player.y) * (targetY - player.y))
+              var directionX = (targetX - (player.x+player.width/2))
+              var directionY = (targetY - (player.y+player.height/2))
+              var length = Math.sqrt(directionX * directionX + directionY * directionY)
+
+              // Normalize the direction vector
+              directionX /= length
+              directionY /= length
 
               // Set initial position and velocity
               bullet.init(player.x+player.width/2, player.y+player.height/2, directionX * player.shotSpeed, directionY * player.shotSpeed)
@@ -121,6 +154,5 @@ EntityBase {
           console.error("Error loading Bullet component:", bulletComponent.errorString())
       }
   }
-
 }
 
