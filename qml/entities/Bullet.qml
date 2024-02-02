@@ -5,7 +5,7 @@ EntityBase {
   id: bullet
   entityType: "bullet"
   width: 30
-  height: 10
+  height: 40
   z:-1
 
   rotation: Math.atan2(collider.linearVelocity.y, collider.linearVelocity.x) * 180 / Math.PI

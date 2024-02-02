@@ -138,28 +138,54 @@ EntityBase {
 //          console.error("Error loading Bullet component:", bulletComponent.errorString())
 //      }
 //  }
+//  function shootTo(targetX, targetY) {
+//      var bulletComponent = Qt.createComponent("Bullet.qml")
+
+//      if (bulletComponent.status === Component.Ready) {
+//          var bullet = bulletComponent.createObject(player.parent)
+//          if (bullet) {
+//              // Calculate the direction towards the mouse position
+//              var directionX = (targetX - (player.x+player.width/2))
+//              var directionY = (targetY - (player.y+player.height/2))
+//              var length = Math.sqrt(directionX * directionX + directionY * directionY)
+
+//              // Normalize the direction vector
+//              directionX /= length
+//              directionY /= length
+
+//              // Set initial position and velocity
+//              bullet.init(player.x+player.width/2, player.y+player.height/2, directionX * player.shotSpeed, directionY * player.shotSpeed)
+//          }
+//      } else {
+//          console.error("Error loading Bullet component:", bulletComponent.errorString())
+//      }
+//  }
   function shootTo(targetX, targetY) {
       var bulletComponent = Qt.createComponent("Bullet.qml")
 
       if (bulletComponent.status === Component.Ready) {
-         // var bullet = bulletComponent.createObject(player.parent)
           var bullet = bulletComponent.createObject(player.parent)
           if (bullet) {
               // Calculate the direction towards the mouse position
-              var directionX = (targetX - (player.x+player.width/2))
-              var directionY = (targetY - (player.y+player.height/2))
+              var directionX = targetX - (player.x + player.width / 2)
+              var directionY = targetY - (player.y + player.height / 2)
               var length = Math.sqrt(directionX * directionX + directionY * directionY)
 
               // Normalize the direction vector
               directionX /= length
               directionY /= length
 
-              // Set initial position and velocity
-              bullet.init(player.x+player.width/2, player.y+player.height/2, directionX * player.shotSpeed, directionY * player.shotSpeed)
+              // Set initial position, exactly at the center of the player
+              var bulletOffsetX = (bullet.width - player.width) / 2
+              var bulletOffsetY = (bullet.height - player.height) / 2
+
+              bullet.init(player.x - bulletOffsetX, player.y - bulletOffsetY, directionX * player.shotSpeed, directionY * player.shotSpeed)
           }
       } else {
           console.error("Error loading Bullet component:", bulletComponent.errorString())
       }
   }
+
+
 }
 

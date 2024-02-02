@@ -20,27 +20,31 @@ GameWindow {
   // this resolution is for iPhone 4 & iPhone 4S
   screenWidth: 960
   screenHeight: 640
-//  StackLayout {
-//      id:stackView
-//      anchors.fill: parent
-//      currentIndex: 0
-//      Scene{
-//          Button{
-//              width: 50
-//              height: 50
-//              onClicked: {
-//                stackView.currentIndex=1
-//                  gameScene.forceActiveFocus()
-//              }
-//          }
-//      }
-//      GameScene {
-//        id: gameScene
-//      }
-//  }
-    GameScene {
-      id: gameScene
+  StackLayout {
+      id:mainStackView
       anchors.fill: parent
-    }
+      currentIndex: 0
+      MainMenu{
+          id:mainMenu
+      }
+      GameScene {
+        id: gameScene
+      }
+      onCurrentIndexChanged: {
+          mainStackView.children[currentIndex].forceActiveFocus()
+//          switch(currentIndex) {
+//            case 0:
+//                mainMenu.forceActiveFocus()
+//              break;
+//            case 1:
+//                gameScene.forceActiveFocus()
+//              break;
+//          }
+      }
+  }
+//    GameScene {
+//      id: gameScene
+//      anchors.fill: parent
+//    }
 }
 
