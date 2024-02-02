@@ -32,11 +32,11 @@ TiledEntityBase {
     categories: Box.Category2
     fixture.onBeginContact: (other, contactNormal) => {
       var otherEntity = other.getBody().target
-      if(otherEntity.entityType === "player") player.contacts++
+      if(otherEntity.entityType === "player") player.contactsY=1
     }
     fixture.onEndContact: other => {
       var otherEntity = other.getBody().target
-      if(otherEntity.entityType === "player") player.contacts--
+      if(otherEntity.entityType === "player") player.contactsY=0
     }
   }
 }

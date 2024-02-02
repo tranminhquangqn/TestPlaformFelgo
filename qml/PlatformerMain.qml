@@ -1,6 +1,7 @@
 import Felgo 4.0
 import QtQuick 2.0
-
+import QtQuick.Layouts
+import QtQuick.Controls
 GameWindow {
   id: gameWindow
 
@@ -19,9 +20,27 @@ GameWindow {
   // this resolution is for iPhone 4 & iPhone 4S
   screenWidth: 960
   screenHeight: 640
-
-  GameScene {
-    id: gameScene
-  }
+//  StackLayout {
+//      id:stackView
+//      anchors.fill: parent
+//      currentIndex: 0
+//      Scene{
+//          Button{
+//              width: 50
+//              height: 50
+//              onClicked: {
+//                stackView.currentIndex=1
+//                  gameScene.forceActiveFocus()
+//              }
+//          }
+//      }
+//      GameScene {
+//        id: gameScene
+//      }
+//  }
+    GameScene {
+      id: gameScene
+      anchors.fill: parent
+    }
 }
 

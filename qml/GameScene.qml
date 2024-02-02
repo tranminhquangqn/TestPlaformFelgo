@@ -6,8 +6,8 @@ import "levels"
 Scene {
   id: gameScene
   // the "logical size" - the scene content is auto-scaled to match the GameWindow size
-  width: 480
-  height: 320
+//  width: 480
+//  height: 320
   gridSize: 32
 
 
@@ -43,15 +43,44 @@ Scene {
   }
 
   // this is the moving item containing the level and player
+  MouseArea {
+      anchors.fill: parent
+//      onClicked: {
+//          player.shootTo(parent.mouseX-viewPort.x, parent.mouseY-viewPort.y)
+//      }
+      onPressed: {
+          // Start shooting when mouse button is pressed
+          autoShootTimer.start()
+      }
+      onReleased: {
+          // Stop shooting when mouse button is released
+          autoShootTimer.stop()
+      }
+      Timer {
+          id: autoShootTimer
+          interval: 100  // Set the interval based on your desired shooting rate
+          repeat: true
+          triggeredOnStart: true
+          onTriggered: {
+              switch(player.currentWeapon) {
+                case 0:
+                  player.shootTo(parent.mouseX-viewPort.x, parent.mouseY-viewPort.y)
+                  break;
+                case 1:
+                  break;
+                default:
+                  player.shootTo(parent.mouseX-viewPort.x, parent.mouseY-viewPort.y)
+              }
+          }
+      }
+  }
   Item {
     id: viewPort
     height: level.height
     width: level.width
     anchors.bottom: gameScene.gameWindowAnchorItem.bottom
     x: player.x > offsetBeforeScrollingStarts ? offsetBeforeScrollingStarts-player.x : 0
-    onXChanged: {
-        console.log("\n X"+x)
-    }
+
 
     PhysicsWorld {
       id: physicsWorld
@@ -112,6 +141,7 @@ Scene {
     width: 150
     color: "blue"
     opacity: 0.4
+    visible: false
 
     Rectangle {
       anchors.centerIn: parent
@@ -161,6 +191,7 @@ Scene {
 //  }
 
   // on desktops, you can move the player with the arrow keys, on mobiles we are using our custom inputs above to modify the controller axis values. With this approach, we only need one actual logic for the movement, always referring to the axis values of the controller
+
   Keys.forwardTo: controller
   TwoAxisController {
       id: controller
@@ -169,7 +200,7 @@ Scene {
           if(actionName === "up") {
               player.jump()
           } else if(actionName === "down") {
-                player.isProne=true
+                player.dropDown()
           } else if (actionName === "shift" && player.state == "walking") {
               player.boostSpeed = true
           } else if (actionName === "ctrl") {
@@ -197,34 +228,5 @@ Scene {
           "ctrl": Qt.Key_Control
       }
   }
-//  ItemEditor {
-//    id: itemEditor
-//    opacity: 0.7
-//    z:1
-//    // start visible
-//  }
-  MouseArea {
-      anchors.fill: parent
-      onClicked: {
-          player.shootTo(mouseX-viewPort.x, mouseY)
-      }
-      onPressed: {
-          // Start shooting when mouse button is pressed
-          autoShootTimer.start()
-      }
-      onReleased: {
-          // Stop shooting when mouse button is released
-          autoShootTimer.stop()
-      }
-      Timer {
-          id: autoShootTimer
-          interval: 100  // Set the interval based on your desired shooting rate
-          repeat: true
-          onTriggered: {
-              player.shootTo(parent.mouseX-viewPort.x, parent.mouseY)
-          }
-      }
-  }
-
 }
 

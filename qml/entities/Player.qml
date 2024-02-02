@@ -21,13 +21,19 @@ EntityBase {
           player.height=50
       }
   }
+  function dropDown() {
+      player.y++
+  }
 
   property int jumpCount: 0
 
-  // the contacts property is used to determine if the player is in touch with any solid objects (like ground or platform), because in this case the player is walking, which enables the ability to jump. contacts > 0 --> walking state
-  property int contacts: 0
+  // the contactsY property is used to determine if the player is in touch with any solid objects (like ground or platform), because in this case the player is walking, which enables the ability to jump. contactsY > 0 --> walking state
+  property int contactsX: 0
+  property int contactsY: 0
+
+  property int currentWeapon: 0
   // property binding to determine the state of the player like described above
-  state: contacts > 0 ? "walking" : "jumping"
+  state: contactsY > 0 ? "walking" : "jumping"
   onStateChanged: console.debug("player.state " + state)
 
   // here you could use a SpriteSquenceVPlay to animate your player
@@ -92,9 +98,9 @@ EntityBase {
           collider.linearVelocity.y = -300
       }
   }
-  onContactsChanged: {
+  onContactsYChanged: {
       // Reset jump count when the player lands on the ground
-      if (contacts > 0) {
+      if (contactsY > 0) {
           player.jumpCount = 0
       }
   }
@@ -136,6 +142,7 @@ EntityBase {
       var bulletComponent = Qt.createComponent("Bullet.qml")
 
       if (bulletComponent.status === Component.Ready) {
+         // var bullet = bulletComponent.createObject(player.parent)
           var bullet = bulletComponent.createObject(player.parent)
           if (bullet) {
               // Calculate the direction towards the mouse position

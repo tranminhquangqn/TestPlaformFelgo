@@ -4,14 +4,17 @@ import QtQuick 2.0
 EntityBase {
   id: bullet
   entityType: "bullet"
-  width: 10
+  width: 30
   height: 10
   z:-1
+
   rotation: Math.atan2(collider.linearVelocity.y, collider.linearVelocity.x) * 180 / Math.PI
   Rectangle {
       width: parent.width
       height: parent.height
       color: "red"
+      radius:width/2
+
   }
   BoxCollider {
     id: collider
