@@ -4,11 +4,11 @@ import QtQuick 2.0
 EntityBase {
   id: bullet
   entityType: "bullet"
-  width: 30
-  height: 40
+  width: 10
+  height: 10
   z:-1
 
-  rotation: Math.atan2(collider.linearVelocity.y, collider.linearVelocity.x) * 180 / Math.PI
+  //rotation: Math.atan2(collider.linearVelocity.y, collider.linearVelocity.x) * 180 / Math.PI
   Rectangle {
       width: parent.width
       height: parent.height
@@ -25,7 +25,7 @@ EntityBase {
     bullet: true
 
     restitution : 0.3
-    gravityScale: 0
+    gravityScale: 0.4
 
     categories: Box.Category3
     collidesWith: Box.Category2

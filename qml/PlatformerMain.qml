@@ -30,6 +30,10 @@ GameWindow {
       GameScene {
         id: gameScene
       }
+      OptionScene{
+        id: optionScene
+      }
+
       onCurrentIndexChanged: {
           mainStackView.children[currentIndex].forceActiveFocus()
 //          switch(currentIndex) {
