@@ -5,25 +5,57 @@ TiledEntityBase {
     id: platform
     entityType: "breakable"
 
-    size: 2 // must be >= 2 and even (2,4,6,...), because we got a sprite for the start, one for the end and 2 center sprites that are only repeatable if both are used
+    width: 200
+    height: 200
 
-    Row {
-        id: tileRow
-        Tile {
-            pos: "left"
-            image: Qt.resolvedUrl("../../assets/platform/left.png")
+//    property var hp: 10
+    function hitted(){
+//        hp--
+//        if(!hp){
+//            platform.destroy()
+//        }
+
+        hitOverlay.visible=true
+        hittedTimer.restart()
+    }
+    Timer{
+        id: hittedTimer
+        interval: 60
+        running: true
+        onTriggered: {
+            hitOverlay.visible=false
         }
-        Repeater {
-            model: size-2
-            Tile {
-                pos: "mid"
-                image: Qt.resolvedUrl("../../assets/platform/mid" + index%2 + ".png")
-            }
-        }
-        Tile {
-            pos: "right"
-            image: Qt.resolvedUrl("../../assets/platform/right.png")
-        }
+    }
+
+//    Row {
+//        id: tileRow
+//        Tile {
+//            pos: "left"
+//            image: Qt.resolvedUrl("../../assets/platform/left.png")
+//        }
+//        Repeater {
+//            model: size-2
+//            Tile {
+//                pos: "mid"
+//                image: Qt.resolvedUrl("../../assets/platform/mid" + index%2 + ".png")
+//            }
+//        }
+//        Tile {
+//            pos: "right"
+//            image: Qt.resolvedUrl("../../assets/platform/right.png")
+//        }
+//    }
+    Rectangle{
+        anchors.fill: parent
+        radius:5
+        color:"brown"
+    }
+    Rectangle{
+        id: hitOverlay
+        visible: false
+        radius:5
+        anchors.fill: parent
+        color:"white"
     }
 
     BoxCollider {

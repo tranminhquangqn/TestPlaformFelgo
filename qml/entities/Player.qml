@@ -7,11 +7,11 @@ EntityBase {
     width: 50
     height: 50
 
-    // add some aliases for easier access to those properties from outside
     property alias collider: collider
     property alias horizontalVelocity: collider.linearVelocity.x
     property real xAccelerate: 1.5
 
+    property int hp: 100
     property bool boostSpeed: false
     property bool isProne: false
     property int currentWeapon: 1
@@ -83,8 +83,6 @@ EntityBase {
     //  function jump() { // 1 jump
     //    console.debug("jump requested at player.state " + state)
     //    if(player.state == "walking") {
-    //      console.debug("do the jump")
-    //      // for the jump, we simply set the upwards velocity of the collider
     //      collider.linearVelocity.y = -300
     //    }
     //  }

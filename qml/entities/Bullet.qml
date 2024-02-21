@@ -53,6 +53,7 @@ EntityBase {
             var otherEntity = other.getBody().target
             if(otherEntity.entityType === "breakable") {
                 bullet.destroy()
+                otherEntity.hitted()
             }
         }
     }
