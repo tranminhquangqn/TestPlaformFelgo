@@ -12,6 +12,12 @@ Scene {
 
         anchors.centerIn: parent
     }
+    ListModel{
+        id: listMenu
+        ListElement{btn:"assa"}
+        ListElement{btn:"Lsasaoad"}
+        ListElement{btn:"Back"}
+    }
     Button{
         onClicked:{
             mainStackView.currentIndex=0

@@ -4,15 +4,40 @@ import QtQuick 2.0
 EntityBase {
   id: bullet
   entityType: "bullet"
-  width: 10
+  width: bulletType===1?10:50
   height: 10
   z:-1
+  property int bulletType:1
+  function accuracy(){
+      switch(bulletType) {
+        case 0:
+          return 0.5
+        case 1:
+          return 0.5
+        case 2:
+          return 0.5
+        default:
+          // code block
+      }
+  }
 
-  //rotation: Math.atan2(collider.linearVelocity.y, collider.linearVelocity.x) * 180 / Math.PI
+  rotation: Math.atan2(collider.linearVelocity.y, collider.linearVelocity.x) * 180 / Math.PI
   Rectangle {
       width: parent.width
       height: parent.height
-      color: "red"
+      color: {
+          switch(bulletType) {
+            case 0:
+              return 0.5
+            case 1:
+              return "red"
+            case 2:
+              return "yellow"
+            default:
+              // code block
+          }
+      }
+
       radius:width/2
 
   }

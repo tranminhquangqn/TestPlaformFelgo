@@ -31,13 +31,20 @@ Scene {
         ListView{
             id: mainMenuListview
             model: listMenu
-            height: parent.height*0.5
+            height: parent.height*0.3
             Layout.alignment :Qt.AlignHCenter
             delegate: Button{
                 text: btn
+                contentItem: Text{
+                    text:parent.text
+                    color:"white"
+                    horizontalAlignment : Text.AlignHCenter
+                    verticalAlignment : Text.AlignVCenter
+                }
+
                 height: mainMenuListview.height/3
                 background: null
-                Layout.alignment :Qt.AlignHCenter
+                anchors.horizontalCenter: parent.horizontalCenter
                 scale: index===currentPick?1.5:1
  //               Layout.horizontalCenter: parent.horizontalCenter
                 onHoveredChanged: {
@@ -79,11 +86,10 @@ Scene {
                 console.log("\nUP")
                 if(currentPick==0){
                     currentPick=2
-
-                   // event.accepted = true;
                 }else{
                     currentPick--
                 }
+                event.accepted = true;
             }else if (event.key === Qt.Key_Down) {
                 console.log("\nDown")
                 if(currentPick==2){
@@ -91,7 +97,9 @@ Scene {
                 }else{
                     currentPick++
                 }
+                event.accepted = true;
             }
+
         }
     }
 }

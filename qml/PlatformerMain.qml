@@ -36,19 +36,9 @@ GameWindow {
 
       onCurrentIndexChanged: {
           mainStackView.children[currentIndex].forceActiveFocus()
-//          switch(currentIndex) {
-//            case 0:
-//                mainMenu.forceActiveFocus()
-//              break;
-//            case 1:
-//                gameScene.forceActiveFocus()
-//              break;
-//          }
+          console.log("\n Focus "+currentIndex)
+
       }
   }
-//    GameScene {
-//      id: gameScene
-//      anchors.fill: parent
-//    }
 }
 

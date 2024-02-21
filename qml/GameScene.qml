@@ -45,31 +45,42 @@ Scene {
   // this is the moving item containing the level and player
   MouseArea {
       anchors.fill: parent
-//      onClicked: {
-//          player.shootTo(parent.mouseX-viewPort.x, parent.mouseY-viewPort.y)
-//      }
       onPressed: {
-          // Start shooting when mouse button is pressed
           autoShootTimer.start()
       }
       onReleased: {
-          // Stop shooting when mouse button is released
           autoShootTimer.stop()
       }
       Timer {
           id: autoShootTimer
-          interval: 100  // Set the interval based on your desired shooting rate
+          interval: {
+              switch(player.currentWeapon) {
+                case 0:
+                  return 100
+                case 1:
+                  return 200
+                case 2:
+                  return 100
+                default:
+                  return 100
+              }
+          }
+
           repeat: true
           triggeredOnStart: true
           onTriggered: {
               switch(player.currentWeapon) {
                 case 0:
-                  player.shootTo(parent.mouseX-viewPort.x, parent.mouseY-viewPort.y)
+                  player.shootTo(parent.mouseX-viewPort.x, parent.mouseY-viewPort.y, player.currentWeapon)
                   break;
                 case 1:
+                  player.shootTo(parent.mouseX-viewPort.x, parent.mouseY-viewPort.y, player.currentWeapon)
+                  break;
+                case 2:
+                  player.shootTo(parent.mouseX-viewPort.x, parent.mouseY-viewPort.y, player.currentWeapon)
                   break;
                 default:
-                  player.shootTo(parent.mouseX-viewPort.x, parent.mouseY-viewPort.y)
+                  player.shootTo(parent.mouseX-viewPort.x, parent.mouseY-viewPort.y, player.currentWeapon)
               }
           }
       }
@@ -193,6 +204,7 @@ Scene {
   // on desktops, you can move the player with the arrow keys, on mobiles we are using our custom inputs above to modify the controller axis values. With this approach, we only need one actual logic for the movement, always referring to the axis values of the controller
 
   Keys.forwardTo: controller
+
   TwoAxisController {
       id: controller
       onInputActionPressed: (actionName, isPressed) => {
@@ -207,6 +219,10 @@ Scene {
               if (isPressed) {
                   player.dash()
               }
+          }else if (actionName === "num1") {
+              player.currentWeapon=1
+          }else if (actionName === "num2") {
+              player.currentWeapon=2
           }
       }
       onInputActionReleased: {
@@ -225,7 +241,9 @@ Scene {
           "drop": Qt.Key_X,
           "space": Qt.Key_Space,
           "shift": Qt.Key_Shift,
-          "ctrl": Qt.Key_Control
+          "ctrl": Qt.Key_Control,
+          "num1": Qt.Key_1,
+          "num2": Qt.Key_2
       }
   }
 }

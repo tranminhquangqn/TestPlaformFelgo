@@ -14,6 +14,7 @@ EntityBase {
 
   property bool boostSpeed: false
   property bool isProne: false
+  property int currentWeapon: 1
   onIsProneChanged: {
       if(isProne){
           player.height=25
@@ -31,7 +32,6 @@ EntityBase {
   property int contactsX: 0
   property int contactsY: 0
 
-  property int currentWeapon: 0
   // property binding to determine the state of the player like described above
   state: contactsY > 0 ? "walking" : "jumping"
   onStateChanged: console.debug("player.state " + state)
@@ -121,50 +121,26 @@ EntityBase {
 //      "xAccelerate": {"min": 1, "max": 10, "stepsize": 0.1 }
 //    }
 //  }
-  property real shotSpeed: 500
-//  function shootTo(targetX, targetY) {
-//      var bulletComponent = Qt.createComponent("Bullet.qml")
-//      if (bulletComponent.status === Component.Ready) {
-//          var bullet = bulletComponent.createObject(player.parent)
-//          if (bullet) {
-//              // Calculate the direction towards the mouse position
-//              var directionX = (targetX - player.x) / Math.sqrt((targetX - player.x) * (targetX - player.x) + (targetY - player.y) * (targetY - player.y))
-//              var directionY = (targetY - player.y) / Math.sqrt((targetX - player.x) * (targetX - player.x) + (targetY - player.y) * (targetY - player.y))
 
-//              // Set initial position and velocity
-//              bullet.init(player.x+player.width/2, player.y+player.height/2, directionX * player.shotSpeed, directionY * player.shotSpeed)
-//          }
-//      } else {
-//          console.error("Error loading Bullet component:", bulletComponent.errorString())
-//      }
-//  }
-//  function shootTo(targetX, targetY) {
-//      var bulletComponent = Qt.createComponent("Bullet.qml")
-
-//      if (bulletComponent.status === Component.Ready) {
-//          var bullet = bulletComponent.createObject(player.parent)
-//          if (bullet) {
-//              // Calculate the direction towards the mouse position
-//              var directionX = (targetX - (player.x+player.width/2))
-//              var directionY = (targetY - (player.y+player.height/2))
-//              var length = Math.sqrt(directionX * directionX + directionY * directionY)
-
-//              // Normalize the direction vector
-//              directionX /= length
-//              directionY /= length
-
-//              // Set initial position and velocity
-//              bullet.init(player.x+player.width/2, player.y+player.height/2, directionX * player.shotSpeed, directionY * player.shotSpeed)
-//          }
-//      } else {
-//          console.error("Error loading Bullet component:", bulletComponent.errorString())
-//      }
-//  }
-  function shootTo(targetX, targetY) {
+  function shootTo(targetX, targetY, bulletType) {
       var bulletComponent = Qt.createComponent("Bullet.qml")
+      var shotSpeed
+      switch(bulletType) {
+        case 0:
+          shotSpeed = 500
+          break;
+        case 1:
+          shotSpeed = 1000 //pistol
+          break;
+        case 2:
+          shotSpeed = 2000 //AK
+          break;
+        default:
+          // code block
+      }
 
       if (bulletComponent.status === Component.Ready) {
-          var bullet = bulletComponent.createObject(player.parent)
+          var bullet = bulletComponent.createObject(player.parent,{bulletType:currentWeapon})
           if (bullet) {
               // Calculate the direction towards the mouse position
               var directionX = targetX - (player.x + player.width / 2)
@@ -179,7 +155,7 @@ EntityBase {
               var bulletOffsetX = (bullet.width - player.width) / 2
               var bulletOffsetY = (bullet.height - player.height) / 2
 
-              bullet.init(player.x - bulletOffsetX, player.y - bulletOffsetY, directionX * player.shotSpeed, directionY * player.shotSpeed)
+              bullet.init(player.x - bulletOffsetX, player.y - bulletOffsetY, directionX * shotSpeed, directionY * shotSpeed)
           }
       } else {
           console.error("Error loading Bullet component:", bulletComponent.errorString())
