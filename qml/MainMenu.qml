@@ -46,7 +46,6 @@ Scene {
                 background: null
                 anchors.horizontalCenter: parent.horizontalCenter
                 scale: index===currentPick?1.5:1
- //               Layout.horizontalCenter: parent.horizontalCenter
                 onHoveredChanged: {
                     if(hovered)
                         currentPick=index

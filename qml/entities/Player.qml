@@ -39,7 +39,7 @@ EntityBase {
     // here you could use a SpriteSquenceVPlay to animate your player
     MultiResolutionImage {
         anchors.fill: parent
-        source: Qt.resolvedUrl("../../assets/player/run.png")
+        source: Qt.resolvedUrl("../../assets/player/megaman.png")
         fillMode :Image.Stretch
     }
 
@@ -51,9 +51,8 @@ EntityBase {
         // this collider must be dynamic because we are moving it by applying forces and impulses
         bodyType: Body.Dynamic // this is the default value but I wanted to mention it ;)
         fixedRotation: true // we are running, not rolling...
-        bullet: true // for super accurate collision detection, use this sparingly, because it's quite performance greedy
+        bullet: true
         sleepingAllowed: false
-        // apply the horizontal value of the TwoAxisController as force to move the player left and right
         //    force: Qt.point(controller.xAxis*170*32,0)
         force: Qt.point(controller.xAxis * (player.boostSpeed ? 300 : 170) * 32, 0)
         // limit the horizontal velocity
@@ -66,7 +65,6 @@ EntityBase {
     // this timer is used to slow down the players horizontal movement. the linearDamping property of the collider works quite similar, but also in vertical direction, which we don't want to be slowed
     Timer {
         id: updateTimer
-        // set this interval as high as possible to improve performance, but as low as needed so it still looks good
         interval: 60
         running: true
         repeat: true
@@ -88,24 +86,18 @@ EntityBase {
     //  }
     function jump() { //double jump
         if (player.state == "walking" || (player.state == "jumping" && player.jumpCount < 2)) {
-            console.debug("do the jump")
             player.jumpCount += 1
-            // for the jump, we simply set the upwards velocity of the collider
             collider.linearVelocity.y = -300
         }
     }
     onContactsYChanged: {
-        // Reset jump count when the player lands on the ground
         if (contactsY > 0) {
             player.jumpCount = 0
         }
     }
 
     function dash() {
-        console.debug("dash requested at player.state " + state)
         if (player.state == "walking") {
-            console.debug("do the dash")
-            // for the dash, set a higher horizontal velocity
             collider.linearVelocity.x = controller.xAxis * 500
         }
     }
