@@ -70,19 +70,20 @@ Scene {
         anchors.bottom: parent.bottom
         anchors.leftMargin: 50
         anchors.rightMargin: 20
+        currentIndex: currentPick
         Flickable{
             id: controlStack
             GroupBox{
-                id: generalGrb
                 width: parent.width
                 background:Rectangle{
                     color:"#201E1F"
                     radius: 10
                 }
                 Column{
-
                     Row{
-
+                       Text{
+                            text:"ADSdf"
+                       }
                     }
                 }
             }
