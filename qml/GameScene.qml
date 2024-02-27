@@ -1,8 +1,11 @@
 import Felgo 4.0
 import QtQuick 2.0
+import QtQuick.Controls
+
 import "entities"
 import "levels"
-
+import "Component"
+import "Component/MaterialDesign"
 Scene {
     id: gameScene
     // the "logical size" - the scene content is auto-scaled to match the GameWindow size
@@ -21,6 +24,7 @@ Scene {
         //color: "#74d6f7"
         color:"black"
     }
+    // HUD ///////////////////////////////////////////
     //player hp bar
     Rectangle{
         z:100
@@ -43,8 +47,36 @@ Scene {
             }
         }
     }
+    Item{
+        width:50
+        height:50
+        ButtonMaterial{
+            id: stateTomoBtn
+            z:100
+            anchors.right: parent.right
+            anchors.top: parent.top
+            _width: 50
+            _height: _width
+            _size: _width * 0.75
+            _iconSourceOn: "cogs"
+            _iconSourceOff: ""
+            anchors.centerIn: parent
+            _enableEffect: true
+            _colorOverlayHigh: "red"
+            _pressedScale: 0.6
+            onClicked: {
+                ingameMenu.open()
+            }
+        }
+    }
+    Popup{
+        id: ingameMenu
+        width: 300
+        height: 200
+        anchors.centerIn: parent
+    }
 
-    // ... followed by 2 parallax layers with trees and grass
+    /////////////////////////////////////////
     ParallaxScrollingBackground {
         sourceImage: Qt.resolvedUrl("../assets/background/layer2.png")
         anchors.bottom: gameScene.gameWindowAnchorItem.bottom

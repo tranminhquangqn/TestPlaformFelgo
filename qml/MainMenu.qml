@@ -46,6 +46,9 @@ Scene {
                 background: null
                 anchors.horizontalCenter: parent.horizontalCenter
                 scale: index===currentPick?1.5:1
+                Behavior on scale {
+                        NumberAnimation { duration: 100 }
+                    }
                 onHoveredChanged: {
                     if(hovered)
                         currentPick=index
