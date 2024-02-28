@@ -47,14 +47,36 @@ Scene {
             }
         }
     }
+    Button{
+        z:100
+        x:100
+        y:50
+        width: 40
+        text: "+"
+        onClicked: {
+        viewPort.scale+=0.1
+        }
+    }
+    Button{
+        z:100
+        x:150
+        y:50
+        width: 40
+        text: "-"
+        onClicked: {
+        viewPort.scale-=0.1
+        }
+    }
+
     Item{
         width:50
         height:50
+        z:100
+        anchors.right: parent.right
+        anchors.top: parent.top
         ButtonMaterial{
             id: stateTomoBtn
-            z:100
-            anchors.right: parent.right
-            anchors.top: parent.top
+            anchors.fill:parent
             _width: 50
             _height: _width
             _size: _width * 0.75
@@ -74,6 +96,58 @@ Scene {
         width: 300
         height: 200
         anchors.centerIn: parent
+        modal:true
+        Rectangle{
+            anchors.fill: parent
+            color: "black"
+        }
+
+        ListModel{
+            id: listOption
+            ListElement{btn:"Resume"}
+            ListElement{btn:"Option"}
+            ListElement{btn:"Back to main menu"}
+        }
+
+        ListView{
+            id: igMenu
+            model: listOption
+            height: parent.height*0.3
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.margins: 15
+            property int currentPick: 0
+            delegate: Button{
+                text: btn
+                contentItem: Text{
+                    text:parent.text
+                    color:"white"
+                    horizontalAlignment : Text.AlignLeft
+                    verticalAlignment : Text.AlignVCenter
+                }
+                height: igMenu.height/3
+                background: null
+                scale: index===igMenu.currentPick?1.5:1
+                onHoveredChanged: {
+                    if(hovered)
+                        igMenu.currentPick=index
+                }
+                onClicked: {
+                    switch(index) {
+                    case 0:
+                        ingameMenu.close()
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        mainStackView.currentIndex = 0
+                        break;
+                    default:
+                        // code block
+                    }
+                }
+            }
+        }
     }
 
     /////////////////////////////////////////
@@ -93,8 +167,6 @@ Scene {
         movementVelocity: player.x > offsetBeforeScrollingStarts ? Qt.point(-player.horizontalVelocity,0) : Qt.point(0,0)
         ratio: Qt.point(0.6,0)
     }
-
-    // this is the moving item containing the level and player
     MouseArea {
         anchors.fill: parent
         onPressed: {
@@ -138,21 +210,25 @@ Scene {
         }
     }
     Item {
+        Rectangle{
+            color: "blue"
+            anchors.fill: parent
+        }
+
         id: viewPort
         height: level.height
         width: level.width
         anchors.bottom: gameScene.gameWindowAnchorItem.bottom
         x: player.x > offsetBeforeScrollingStarts ? offsetBeforeScrollingStarts-player.x : 0
-
-
+        Behavior on scale {
+            NumberAnimation{ duration:180}
+        }
         PhysicsWorld {
             id: physicsWorld
             gravity: Qt.point(0, 30)
-            debugDrawVisible: false // enable this for physics debugging
+            debugDrawVisible: false
             z: 1000
-
             onPreSolve: contact => {
-                            //this is called before the Box2DWorld handles contact events
                             var entityA = contact.fixtureA.getBody().target
                             var entityB = contact.fixtureB.getBody().target
                             if(entityB.entityType === "platform" && entityA.entityType === "player" &&
@@ -164,7 +240,7 @@ Scene {
                         }
         }
 
-        // you could load your levels Dynamically with a Loader component here
+        // load your levels Dynamically with a Loader component here
         Level1 {
             id: level
         }
@@ -193,41 +269,41 @@ Scene {
         }
     }
 
-    Rectangle {
-        // you should hide those input controls on desktops, not only because they are really ugly in this demo, but because you can move the player with the arrow keys there
-        //visible: !system.desktopPlatform
-        //enabled: visible
-        anchors.right: parent.right
-        anchors.bottom: parent.bottom
-        height: 50
-        width: 150
-        color: "blue"
-        opacity: 0.4
-        visible: false
+//    Rectangle {
+//        // you should hide those input controls on desktops, not only because they are really ugly in this demo, but because you can move the player with the arrow keys there
+//        //visible: !system.desktopPlatform
+//        //enabled: visible
+//        anchors.right: parent.right
+//        anchors.bottom: parent.bottom
+//        height: 50
+//        width: 150
+//        color: "blue"
+//        opacity: 0.4
+//        visible: false
 
-        Rectangle {
-            anchors.centerIn: parent
-            width: 1
-            height: parent.height
-            color: "white"
-        }
-        MultiPointTouchArea {
-            anchors.fill: parent
-            onPressed: touchPoints => {
-                           if(touchPoints[0].x < width/2)
-                           controller.xAxis = -1
-                           else
-                           controller.xAxis = 1
-                       }
-            onUpdated: touchPoints => {
-                           if(touchPoints[0].x < width/2)
-                           controller.xAxis = -1
-                           else
-                           controller.xAxis = 1
-                       }
-            onReleased: controller.xAxis = 0
-        }
-    }
+//        Rectangle {
+//            anchors.centerIn: parent
+//            width: 1
+//            height: parent.height
+//            color: "white"
+//        }
+//        MultiPointTouchArea {
+//            anchors.fill: parent
+//            onPressed: touchPoints => {
+//                           if(touchPoints[0].x < width/2)
+//                           controller.xAxis = -1
+//                           else
+//                           controller.xAxis = 1
+//                       }
+//            onUpdated: touchPoints => {
+//                           if(touchPoints[0].x < width/2)
+//                           controller.xAxis = -1
+//                           else
+//                           controller.xAxis = 1
+//                       }
+//            onReleased: controller.xAxis = 0
+//        }
+//    }
 
     //  Rectangle {
     //    // same as the above input control

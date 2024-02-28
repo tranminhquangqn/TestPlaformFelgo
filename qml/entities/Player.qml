@@ -137,8 +137,6 @@ EntityBase {
                 var directionX = targetX - (player.x + player.width / 2)
                 var directionY = targetY - (player.y + player.height / 2)
                 var length = Math.sqrt(directionX * directionX + directionY * directionY)
-
-                // Normalize the direction vector
                 directionX /= length
                 directionY /= length
 
