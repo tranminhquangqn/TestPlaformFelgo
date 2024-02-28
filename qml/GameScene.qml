@@ -12,16 +12,13 @@ Scene {
     //  width: 480
     //  height: 320
     gridSize: 32
-    property int offsetBeforeScrollingStarts: 240
+    property int offsetBeforeScrollingStarts: gameWindow.screenWidth/2-player.width/2
 
     EntityManager {
         id: entityManager
     }
-
-    // the whole screen is filled with an incredibly beautiful blue ...
     Rectangle {
         anchors.fill: gameScene.gameWindowAnchorItem
-        //color: "#74d6f7"
         color:"black"
     }
     // HUD ///////////////////////////////////////////
@@ -43,11 +40,11 @@ Scene {
                 color: "green"
                 width: parent.width
                 height: parent.height*player.hp/100
-
             }
         }
     }
     Button{
+        // Zoom in button
         z:100
         x:100
         y:50
@@ -58,6 +55,7 @@ Scene {
         }
     }
     Button{
+         // Zoom out button
         z:100
         x:150
         y:50
@@ -101,14 +99,12 @@ Scene {
             anchors.fill: parent
             color: "black"
         }
-
         ListModel{
             id: listOption
             ListElement{btn:"Resume"}
             ListElement{btn:"Option"}
             ListElement{btn:"Back to main menu"}
         }
-
         ListView{
             id: igMenu
             model: listOption
@@ -189,7 +185,6 @@ Scene {
                     return 100
                 }
             }
-
             repeat: true
             triggeredOnStart: true
             onTriggered: {
@@ -210,11 +205,6 @@ Scene {
         }
     }
     Item {
-        Rectangle{
-            color: "blue"
-            anchors.fill: parent
-        }
-
         id: viewPort
         height: level.height
         width: level.width
@@ -239,8 +229,6 @@ Scene {
                             }
                         }
         }
-
-        // load your levels Dynamically with a Loader component here
         Level1 {
             id: level
         }

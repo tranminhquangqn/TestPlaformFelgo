@@ -25,7 +25,6 @@ EntityBase {
     function dropDown() {
         player.y++
     }
-
     property int jumpCount: 0
 
     // the contactsY property is used to determine if the player is in touch with any solid objects (like ground or platform), because in this case the player is walking, which enables the ability to jump. contactsY > 0 --> walking state
@@ -35,6 +34,10 @@ EntityBase {
     // property binding to determine the state of the player like described above
     state: contactsY > 0 ? "walking" : "jumping"
     onStateChanged: console.debug("player.state " + state)
+    Rectangle{
+        color:"blue"
+        anchors.fill:parent
+    }
 
     // here you could use a SpriteSquenceVPlay to animate your player
     MultiResolutionImage {
@@ -101,14 +104,6 @@ EntityBase {
             collider.linearVelocity.x = controller.xAxis * 500
         }
     }
-    //  EditableComponent {
-    //    target: player
-    //    editableType: "Balancing"
-    //    defaultGroup: "player"
-    //    properties: {
-    //      "xAccelerate": {"min": 1, "max": 10, "stepsize": 0.1 }
-    //    }
-    //  }
 
     function shootTo(targetX, targetY, bulletType) {
         var bulletComponent = Qt.createComponent("Bullet.qml")
@@ -129,7 +124,6 @@ EntityBase {
         default:
             // code block
         }
-
         if (bulletComponent.status === Component.Ready) {
             var bullet = bulletComponent.createObject(player.parent,{bulletType:currentWeapon})
             if (bullet) {
@@ -139,7 +133,6 @@ EntityBase {
                 var length = Math.sqrt(directionX * directionX + directionY * directionY)
                 directionX /= length
                 directionY /= length
-
                 // Set initial position, exactly at the center of the player
                 var bulletOffsetX = (bullet.width - player.width) / 2
                 var bulletOffsetY = (bullet.height - player.height) / 2
