@@ -51,7 +51,7 @@ Scene {
         width: 40
         text: "+"
         onClicked: {
-        viewPort.scale+=0.1
+        viewPortScale.viewScale+=0.1
         }
     }
     Button{
@@ -62,7 +62,7 @@ Scene {
         width: 40
         text: "-"
         onClicked: {
-        viewPort.scale-=0.1
+        viewPortScale.viewScale-=0.1
         }
     }
 
@@ -209,10 +209,21 @@ Scene {
         height: level.height
         width: level.width
         anchors.bottom: gameScene.gameWindowAnchorItem.bottom
-        x: player.x > offsetBeforeScrollingStarts ? offsetBeforeScrollingStarts-player.x : 0
-        Behavior on scale {
-            NumberAnimation{ duration:180}
+        transform: Scale {
+            id: viewPortScale
+            property real viewScale: 1
+            origin.x: gameWindow.screenWidth/2;
+            origin.y: gameWindow.screenHeight/2
+            xScale:viewScale
+            yScale:viewScale
+            Behavior on viewScale {NumberAnimation{ duration:180}}
         }
+        x: player.x > offsetBeforeScrollingStarts ? offsetBeforeScrollingStarts-player.x : 0
+        onXChanged:{
+            console.log("\m x: "+x)
+        }
+
+
         PhysicsWorld {
             id: physicsWorld
             gravity: Qt.point(0, 30)

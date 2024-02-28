@@ -6,7 +6,7 @@ EntityBase {
     entityType: "bullet"
     width: bulletType===1?10:50
     height: 10
-    z:-1
+    z:50
     property int bulletType:1
     function accuracy(){
         switch(bulletType) {

@@ -121,11 +121,11 @@ EntityBase {
         case 3:
             shotSpeed = 1500 //Rkman
             break;
-        default:
+//        default:
             // code block
         }
         if (bulletComponent.status === Component.Ready) {
-            var bullet = bulletComponent.createObject(player.parent,{bulletType:currentWeapon})
+            var bullet = bulletComponent.createObject(viewPort,{bulletType:currentWeapon})
             if (bullet) {
                 // Calculate the direction towards the mouse position
                 var directionX = targetX - (player.x + player.width / 2)

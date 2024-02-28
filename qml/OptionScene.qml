@@ -3,13 +3,15 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Felgo
 
-// EMPTY SCENE
+import "Component"
+import "Component/MaterialDesign"
 
 Scene {
     id: optionScene
     ListModel{
         id: listOption
         ListElement{btn:"Control"}
+        ListElement{btn:"Video"}
         ListElement{btn:"Audio"}
         ListElement{btn:"Back"}
     }
@@ -50,7 +52,6 @@ Scene {
                     case 0:
                         break;
                     case 1:
-                        mainStackView.currentIndex = 0
                         break;
                     case 2:
                         mainStackView.currentIndex = 0
@@ -71,8 +72,13 @@ Scene {
         anchors.leftMargin: 50
         anchors.rightMargin: 20
         currentIndex: currentPick
+        Rectangle{
+            color:"green"
+        }
+
         Flickable{
             id: controlStack
+            anchors.fill:parent
             GroupBox{
                 width: parent.width
                 background:Rectangle{
@@ -82,7 +88,42 @@ Scene {
                 Column{
                     Row{
                        Text{
-                            text:"ADSdf"
+                            text:"Screen"
+                       }
+                       ComboBoxCustom{
+                           width: 250
+                           height: 45
+                           wheelEnabled: true
+                           _model: ["Full screen",
+                                    "Windowed",
+                                    "Borderless Window"]
+                           _bgCombobox: "#424242"
+                           _bgPopup: "#424242"
+                           _opacityPopup: 1.0
+                           _fontSize: 14
+                           modelDataColor: "white"
+                           anchors.centerIn: parent
+                           //currentIndex:stackView.currentIndex
+                       }
+                    }
+                    Row{
+                       Text{
+                            text:"Resolution"
+                       }
+                       ComboBoxCustom{
+                           width: 250
+                           height: 45
+                           wheelEnabled: true
+                           _model: ["960x640",
+                                    "1280x720",
+                                    "1920x1080"]
+                           _bgCombobox: "#424242"
+                           _bgPopup: "#424242"
+                           _opacityPopup: 1.0
+                           _fontSize: 14
+                           modelDataColor: "white"
+                           anchors.centerIn: parent
+                           //currentIndex:stackView.currentIndex
                        }
                     }
                 }
