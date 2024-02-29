@@ -9,7 +9,7 @@ class MainVM: public QObject
 {
     Q_OBJECT
 public:
-    MainVM(QApplication* qapp, int argc, char** argv, QObject* parent = nullptr);
+    MainVM(QApplication* app, int argc, char** argv, QObject* parent = nullptr);
 
 public slots:
     void buttonCClicked();

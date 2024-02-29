@@ -33,7 +33,6 @@ GameWindow {
         }
         onCurrentIndexChanged: {
             mainStackView.children[currentIndex].forceActiveFocus()
-            console.log("\n Focus "+currentIndex)
         }
     }
 }

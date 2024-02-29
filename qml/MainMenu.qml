@@ -15,6 +15,7 @@ Scene {
         ListElement{btn:"New game"}
         ListElement{btn:"Load game"}
         ListElement{btn:"Option"}
+        ListElement{btn:"Exit"}
     }
     ColumnLayout{
         anchors.fill: parent
@@ -62,6 +63,9 @@ Scene {
                         break;
                       case 2:
                         mainStackView.currentIndex=2
+                        break;
+                      case 3:
+                        Qt.quit()
                         break;
                       default:
                         // code block

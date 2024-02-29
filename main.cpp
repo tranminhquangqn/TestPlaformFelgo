@@ -3,6 +3,9 @@
 
 #include <QQmlApplicationEngine>
 
+#include <QQmlContext>
+#include "ViewModel/main_vm.h"
+
 // uncomment this line to add the Live Client Module and use live reloading with your custom C++ code
 //#include <FelgoLiveClient>
 
@@ -22,6 +25,10 @@ int main(int argc, char *argv[])
     // Set an optional license key from project file
     // This does not work if using Felgo Live, only for Felgo Cloud Builds and local builds
     felgo.setLicenseKey(PRODUCT_LICENSE_KEY);
+
+
+/*    MainVM mainVM(&app, argc, argv);
+    engine.rootContext()->setContextProperty(QStringLiteral("mainVM"), &mainVM)*/;
 
     // use this during development
     // for PUBLISHING, use the entry point below

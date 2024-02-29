@@ -2,7 +2,7 @@
 #include <QDebug>
 
 
-MainVM::MainVM(QApplication* qapp, int argc, char** argv, QObject* parent) : QObject(parent)
+MainVM::MainVM(QApplication* app, int argc, char** argv, QObject* parent) : QObject(parent)
 {
     qDebug()<<"\n MainVM ghdfhdhdhdhdhdhdhdhdhdhdhdhd";
 }
