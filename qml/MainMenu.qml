@@ -3,7 +3,6 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Felgo
 
-
 Scene {
     id:mainMenuScene
     property int currentPick:0
@@ -59,7 +58,7 @@ Scene {
                         mainStackView.currentIndex=1
                         break;
                       case 1:
-                        // code block
+                        mainVM.buttonCClicked()
                         break;
                       case 2:
                         mainStackView.currentIndex=2

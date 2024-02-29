@@ -75,56 +75,84 @@ Scene {
         Rectangle{
             color:"green"
         }
-
         Flickable{
             id: controlStack
-            anchors.fill:parent
+//            contentWidth: itemscontent.width
+//            contentHeight: itemscontent.height
+            boundsBehavior: Flickable.StopAtBounds
+            ScrollBar.vertical: ScrollBar{}
             GroupBox{
+                id: videoGrb
                 width: parent.width
                 background:Rectangle{
                     color:"#201E1F"
                     radius: 10
                 }
                 Column{
+                    spacing: 20
                     Row{
-                       Text{
-                            text:"Screen"
-                       }
-                       ComboBoxCustom{
-                           width: 250
-                           height: 45
-                           wheelEnabled: true
-                           _model: ["Full screen",
+                        width: implicitWidth
+                        height: implicitHeight
+                        spacing: 20
+                        Item{
+                            width: videoGrb.width / 3
+                            height: 40
+                            Text{
+                                text: "System Log Font"
+                                color: "white"
+                                width: contentWidth
+                                height: contentHeight
+                                anchors.fill: parent
+                                horizontalAlignment: Text.AlignLeft
+                                verticalAlignment: Text.AlignVCenter
+                                font.pointSize: 12
+                            }
+                        }
+                        ComboBoxCustom{
+                            width: 200
+                            height: 40
+                            wheelEnabled: true
+                            _model: ["Full screen",
                                     "Windowed",
                                     "Borderless Window"]
-                           _bgCombobox: "#424242"
-                           _bgPopup: "#424242"
-                           _opacityPopup: 1.0
-                           _fontSize: 14
-                           modelDataColor: "white"
-                           anchors.centerIn: parent
-                           //currentIndex:stackView.currentIndex
-                       }
+                            _bgCombobox: "#424242"
+                            _bgPopup: "#424242"
+                            _opacityPopup: 1.0
+                            _fontSize: 14
+                            modelDataColor: "white"
+                        }
                     }
                     Row{
-                       Text{
-                            text:"Resolution"
-                       }
-                       ComboBoxCustom{
-                           width: 250
-                           height: 45
-                           wheelEnabled: true
-                           _model: ["960x640",
-                                    "1280x720",
-                                    "1920x1080"]
-                           _bgCombobox: "#424242"
-                           _bgPopup: "#424242"
-                           _opacityPopup: 1.0
-                           _fontSize: 14
-                           modelDataColor: "white"
-                           anchors.centerIn: parent
-                           //currentIndex:stackView.currentIndex
-                       }
+                        width: implicitWidth
+                        height: implicitHeight
+                        spacing: 20
+                        Item{
+                            width: videoGrb.width / 3
+                            height: 40
+                            Text{
+                                text: "Resolution"
+                                color: "white"
+                                width: contentWidth
+                                height: contentHeight
+                                anchors.fill: parent
+                                horizontalAlignment: Text.AlignLeft
+                                verticalAlignment: Text.AlignVCenter
+                                font.pointSize: 12
+                            }
+                        }
+                        ComboBoxCustom{
+                            width: 200
+                            height: 40
+                            wheelEnabled: true
+                            _model: ["960x640",
+                                "1280x720",
+                                "1920x1080"]
+                            _bgCombobox: "#424242"
+                            _bgPopup: "#424242"
+                            _opacityPopup: 1.0
+                            _fontSize: 14
+                            modelDataColor: "white"
+                        }
                     }
                 }
             }

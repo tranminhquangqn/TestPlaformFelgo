@@ -151,9 +151,7 @@ Scene {
         sourceImage: Qt.resolvedUrl("../assets/background/layer2.png")
         anchors.bottom: gameScene.gameWindowAnchorItem.bottom
         anchors.horizontalCenter: gameScene.gameWindowAnchorItem.horizontalCenter
-        // we move the parallax layers at the same speed as the player
         movementVelocity: player.x > offsetBeforeScrollingStarts ? Qt.point(-player.horizontalVelocity,0) : Qt.point(0,0)
-        // the speed then gets multiplied by this ratio to create the parallax effect
         ratio: Qt.point(0.3,0)
     }
     ParallaxScrollingBackground {
@@ -212,8 +210,8 @@ Scene {
         transform: Scale {
             id: viewPortScale
             property real viewScale: 1
-            origin.x: gameWindow.screenWidth/2;
-            origin.y: gameWindow.screenHeight/2
+            origin.x: 0//gameWindow.screenWidth/2;
+            origin.y: 0//gameWindow.screenHeight/2
             xScale:viewScale
             yScale:viewScale
             Behavior on viewScale {NumberAnimation{ duration:180}}
@@ -267,67 +265,6 @@ Scene {
             }
         }
     }
-
-//    Rectangle {
-//        // you should hide those input controls on desktops, not only because they are really ugly in this demo, but because you can move the player with the arrow keys there
-//        //visible: !system.desktopPlatform
-//        //enabled: visible
-//        anchors.right: parent.right
-//        anchors.bottom: parent.bottom
-//        height: 50
-//        width: 150
-//        color: "blue"
-//        opacity: 0.4
-//        visible: false
-
-//        Rectangle {
-//            anchors.centerIn: parent
-//            width: 1
-//            height: parent.height
-//            color: "white"
-//        }
-//        MultiPointTouchArea {
-//            anchors.fill: parent
-//            onPressed: touchPoints => {
-//                           if(touchPoints[0].x < width/2)
-//                           controller.xAxis = -1
-//                           else
-//                           controller.xAxis = 1
-//                       }
-//            onUpdated: touchPoints => {
-//                           if(touchPoints[0].x < width/2)
-//                           controller.xAxis = -1
-//                           else
-//                           controller.xAxis = 1
-//                       }
-//            onReleased: controller.xAxis = 0
-//        }
-//    }
-
-    //  Rectangle {
-    //    // same as the above input control
-    //    //visible: !system.desktopPlatform
-    //    //enabled: visible
-    //    anchors.left: parent.left
-    //    anchors.bottom: parent.bottom
-    //    height: 100
-    //    width: 100
-    //    color: "green"
-    //    opacity: 0.4
-
-    //    Text {
-    //      anchors.centerIn: parent
-    //      text: "jump"
-    //      color: "white"
-    //      font.pixelSize: 9
-    //    }
-    //    MouseArea {
-    //      anchors.fill: parent
-    //      onPressed: player.jump()
-    //    }
-    //  }
-
-    // on desktops, you can move the player with the arrow keys, on mobiles we are using our custom inputs above to modify the controller axis values. With this approach, we only need one actual logic for the movement, always referring to the axis values of the controller
 
     Keys.forwardTo: controller
 

@@ -1,6 +1,6 @@
 {
   "title": "Platformer",
-  "identifier": "com.felgo.demos.Platformer",
+  "identifier": "com.yourcompany.wizardEVAP.NewPlaform",
   "orientation": "landscape",
   "versioncode": 1,
   "versionname": "1.0.0",
