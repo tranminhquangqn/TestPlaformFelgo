@@ -4,10 +4,15 @@
 
 MainVM::MainVM(QApplication* app, int argc, char** argv, QObject* parent) : QObject(parent)
 {
-    qDebug()<<"\n MainVM ghdfhdhdhdhdhdhdhdhdhdhdhdhd";
+    master_app.reset(new MasterApp(parent));
+}
+
+MainVM::~MainVM()
+{
+    delete master_app.data();
 }
 
 void MainVM::buttonCClicked()
 {
-    qDebug()<<"\n MainVM ghdfhdhdhdhdhdhdhdhdhdhdhdhd";
+
 }

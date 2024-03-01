@@ -35,6 +35,8 @@ list(REMOVE_ITEM AssetsFiles ${QmlFiles})
 qt_add_executable(appNewPlaform
     main.cpp
     ViewModel/main_vm.cpp
+    ViewModel/master_app.cpp
+    ScriptConfig/cfg_app.cpp
     ${QmlFiles}
     ${AssetsFiles}
 )
