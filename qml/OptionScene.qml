@@ -75,7 +75,7 @@ Scene {
         Rectangle{
             Text{
                 anchors.centerIn: parent
-                text: control
+                text: "control"
             }
         }
         Flickable{

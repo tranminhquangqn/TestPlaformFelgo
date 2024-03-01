@@ -27,8 +27,8 @@ int main(int argc, char *argv[])
     felgo.setLicenseKey(PRODUCT_LICENSE_KEY);
 
 
-/*    MainVM mainVM(&app, argc, argv);
-    engine.rootContext()->setContextProperty(QStringLiteral("mainVM"), &mainVM)*/;
+    MainVM mainVM(&app, argc, argv);
+    engine.rootContext()->setContextProperty(QStringLiteral("mainVM"), &mainVM);
 
     // use this during development
     // for PUBLISHING, use the entry point below
