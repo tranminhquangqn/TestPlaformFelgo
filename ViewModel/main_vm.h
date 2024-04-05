@@ -6,6 +6,8 @@
 #include <QSharedPointer>
 
 #include "master_app.h"
+#include "optionscene_vm.h"
+#include "gameprogress_vm.h"
 class MainVM: public QObject
 {
     Q_OBJECT
@@ -13,7 +15,9 @@ public:
     MainVM(QApplication* app, int argc, char** argv, QObject* parent = nullptr);
     ~MainVM();
     QSharedPointer<MasterApp> master_app;
+    QSharedPointer<GameProgress> gameProgress;
+    QSharedPointer<OptionScene_VM> optionscene_vm;
+    \
 public slots:
-    void buttonCClicked();
 };
 #endif // MAIN_VM_H

@@ -19,7 +19,6 @@ public:
 
     static CfgApp* instance();
 
-//	StateBackupProcess stateBackupProcess;
     void readFileConfig();
     void writeFileConfig();
 
@@ -32,20 +31,12 @@ public:
 //	//Not show in UI
 //	std::vector<std::string> camsFocus		  = {"Tomo Pose", "Tomo", "Shipper", "Carton Transfer"};
 
-    QString m_strServerName;
+    QString m_saveName;
     QString m_sConfigPath=QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     int m_nPort;
     bool m_bIsOnAllOverLay;
 
-
-//	std::vector<std::string> camerasID		  = {"18443010611D631200", "184430108165940F00", "1844301041F6621200"};
-//	std::vector<std::string> defaultCamerasID		  = {"18443010611D631200", "184430108165940F00", "1844301041F6621200"};
-//	/*---------------------------*/
-
-//	bool configValid = true;
-
 protected:
-   // string fileConfig = getenv("HOME") + std::string("/tomo_config/carton_ui.yaml");
     QString  fileConfig = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/ALOALO.json";
 };
 

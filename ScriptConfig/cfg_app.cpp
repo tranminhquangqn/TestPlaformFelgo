@@ -9,18 +9,12 @@
 CfgApp::CfgApp()
 {
     readFileConfig();
-
-    // / Create and initialize top level station objects from here
-    // / Udupa; Nov'22
-    // tcp_server.StartServer(m_strServerName, m_nPort);
-
-    qDebug()<<"\nALOLO"<<fileConfig;
 //    this->initVariable();
 }
 
 CfgApp::~CfgApp()
 {
- //   this->writeFileConfig();
+    this->writeFileConfig();
 }
 //void CfgApp::initVariable()
 //{
@@ -43,7 +37,7 @@ void CfgApp::readFileConfig()
 //        m_sConfigPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
         QFile file(fileConfig);
         if(!file.exists()) {
-            m_strServerName							  = "TomO-Streaming";
+            m_saveName                                = "Save 001";
             m_nPort									  = 27025;
             m_sConfigPath							  = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
             m_bIsOnAllOverLay						  = true;
@@ -58,9 +52,9 @@ void CfgApp::readFileConfig()
             QJsonDocument jsonDoc = QJsonDocument::fromJson(allData, &json_error);
             QJsonObject rootObj	  = jsonDoc.object();
 
-            m_strServerName = rootObj.value("ServerName").toString();
-            if(m_strServerName == "")
-                m_strServerName = "TomO-Streaming";
+            m_saveName = rootObj.value("ServerName").toString();
+            if(m_saveName == "")
+                m_saveName = "TomO-Streaming";
 
             m_nPort = rootObj.value("Port").toInt();
             if(m_nPort == 0)
@@ -90,8 +84,7 @@ void CfgApp::writeFileConfig()
 {
     //    QMutexLocker locker(&mutex);
     QJsonObject rootObj;
- //   rootObj.insert("ServerName", QString::fromStdString(m_strServerName));
-    rootObj.insert("ServerName", QJsonValue::fromVariant(m_strServerName));
+    rootObj.insert("ServerName", QJsonValue::fromVariant(m_saveName));
     rootObj.insert("Port", m_nPort);
     rootObj.insert("ConfigPath", m_sConfigPath);
     rootObj.insert("IsOnAllOverLay", m_bIsOnAllOverLay);

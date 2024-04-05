@@ -8,9 +8,6 @@ import "Component"
 import "Component/MaterialDesign"
 Scene {
     id: gameScene
-    // the "logical size" - the scene content is auto-scaled to match the GameWindow size
-    //  width: 480
-    //  height: 320
     gridSize: 32
     property int offsetBeforeScrollingStarts: gameWindow.screenWidth/2-player.width/2
 

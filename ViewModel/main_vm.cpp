@@ -12,7 +12,3 @@ MainVM::~MainVM()
     delete master_app.data();
 }
 
-void MainVM::buttonCClicked()
-{
-
-}

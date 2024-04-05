@@ -2,12 +2,15 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import Felgo
+import QtQuick.Controls.Material
 
 import "Component"
 import "Component/MaterialDesign"
 
 Scene {
     id: optionScene
+    Material.theme: Material.Dark
+    Material.accent: Material.Purple
     ListModel{
         id: listOption
         ListElement{btn:"Control"}
@@ -34,6 +37,7 @@ Scene {
             delegate: Button{
                 text: btn
                 contentItem: Text{
+                    id:optionListviewTabText
                     text:parent.text
                     color:"white"
                     horizontalAlignment : Text.AlignLeft
@@ -43,17 +47,27 @@ Scene {
                 background: null
                 //anchors.horizontalCenter: parent.horizontalCenter
                 scale: index===currentPick?1.5:1
+                Behavior on scale {
+                        NumberAnimation { duration: 100 }
+                    }
                 onHoveredChanged: {
-                    if(hovered)
-                        currentPick=index
+                    if(hovered){
+                        optionListviewTabText.font.bold=true
+                    }else{
+                        optionListviewTabText.font.bold=false
+                    }
+
                 }
                 onClicked: {
+                    currentPick=index
                     switch(index) {
                     case 0:
                         break;
                     case 1:
                         break;
                     case 2:
+                        break;
+                    case 3:
                         mainStackView.currentIndex = 0
                         break;
                     default:
@@ -80,8 +94,6 @@ Scene {
         }
         Flickable{
             id: videoStack
-//            contentWidth: itemscontent.width
-//            contentHeight: itemscontent.height
             boundsBehavior: Flickable.StopAtBounds
             ScrollBar.vertical: ScrollBar{}
             GroupBox{
@@ -93,6 +105,10 @@ Scene {
                 }
                 Column{
                     spacing: 20
+                    Item{
+                        height: 10
+                    }
+
                     Row{
                         width: implicitWidth
                         height: implicitHeight
@@ -112,6 +128,7 @@ Scene {
                             }
                         }
                         ComboBoxCustom{
+
                             width: 200
                             height: 40
                             wheelEnabled: true
@@ -175,12 +192,15 @@ Scene {
                 }
                 Column{
                     spacing: 20
+                    Item{
+                        height: 10
+                    }
                     Row{
                         width: implicitWidth
                         height: implicitHeight
                         spacing: 20
                         Item{
-                            width: videoGrb.width / 3
+                            width: audioGrb.width * 0.25
                             height: 40
                             Text{
                                 text: "Volume"
@@ -193,29 +213,49 @@ Scene {
                                 font.pointSize: 12
                             }
                         }
-                        ComboBoxCustom{
-                            width: 200
-                            height: 40
+                        Slider {
+                            id: sliderX
+                            from: 0
+                            to: 100
+                            stepSize: 1
+                            value: 20
                             wheelEnabled: true
-                            _model: ["Full screen",
-                                    "Windowed",
-                                    "Borderless Window"]
-                            _bgCombobox: "#424242"
-                            _bgPopup: "#424242"
-                            _opacityPopup: 1.0
-                            _fontSize: 14
-                            modelDataColor: "white"
+                            width: audioGrb.width * 0.5
+                            height: 40
+                            //anchors.verticalCenter: parent.verticalCenter
+                            background: Rectangle {
+                                anchors.centerIn: parent
+                                width: parent.width-sliderXHandle.width
+                                height: 8
+                                color: "#626ca6"
+                                radius:3
+                            }
+                            handle: Rectangle {
+                                id: sliderXHandle
+                                x: sliderX.visualPosition * (sliderX.width - width)
+                                y: (sliderX.height - height) / 2
+                                color: "white"
+                                width: 15
+                                height: parent.height*0.6
+                                radius: 3
+                                MaterialDesignIcon {
+                                    id: icon
+                                    name: "equal"
+                                    color: sliderX.pressed?"cyan":"black"
+                                    size: parent.width
+                                    anchors.centerIn: parent
+                                    rotation: 90
+                                }
+                            }
+                            onValueChanged: {
+
+                            }
                         }
-                    }
-                    Row{
-                        width: implicitWidth
-                        height: implicitHeight
-                        spacing: 20
                         Item{
-                            width: videoGrb.width / 3
+                            width: audioGrb.width * 0.25
                             height: 40
                             Text{
-                                text: "Resolution"
+                                text: sliderX.value
                                 color: "white"
                                 width: contentWidth
                                 height: contentHeight
@@ -225,24 +265,9 @@ Scene {
                                 font.pointSize: 12
                             }
                         }
-                        ComboBoxCustom{
-                            width: 200
-                            height: 40
-                            wheelEnabled: true
-                            _model: ["960x640",
-                                "1280x720",
-                                "1920x1080"]
-                            _bgCombobox: "#424242"
-                            _bgPopup: "#424242"
-                            _opacityPopup: 1.0
-                            _fontSize: 14
-                            modelDataColor: "white"
-                        }
                     }
                 }
             }
         }
-
-
     }
 }

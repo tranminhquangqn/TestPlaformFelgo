@@ -37,6 +37,7 @@ qt_add_executable(appNewPlaform
     ViewModel/main_vm.cpp
     ViewModel/master_app.cpp
     ScriptConfig/cfg_app.cpp
+    qml.qrc
     ${QmlFiles}
     ${AssetsFiles}
 )

@@ -2,7 +2,7 @@
 
 MasterApp::MasterApp(QObject* parent): QObject{parent}
 {
-    //config.readFileConfig();
+    config.readFileConfig();
 }
 
 MasterApp::~MasterApp()
