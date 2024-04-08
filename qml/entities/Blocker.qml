@@ -8,12 +8,12 @@ TiledEntityBase {
     width: 200
     height: 200
 
-//    property var hp: 10
+    property var hp: 10
     function hitted(){
-//        hp--
-//        if(!hp){
-//            platform.destroy()
-//        }
+        hp--
+        if(!hp){
+            platform.destroy()
+        }
 
         hitOverlay.visible=true
         hittedTimer.restart()

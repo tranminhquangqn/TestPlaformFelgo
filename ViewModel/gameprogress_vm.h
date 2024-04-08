@@ -2,6 +2,8 @@
 #define GAMEPROGRESS_H
 
 #include <QJsonObject>
+#include <QDir>
+#include <QStandardPaths>
 
 class GameProgress
 {
@@ -25,9 +27,12 @@ public:
     void fromJson(const QJsonObject &json);
 
 private:
+    QString saveDir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/Mygame/";
+
     int m_level;
     int m_hp;
     int m_def;
+
 };
 
 #endif // GAMEPROGRESS_H

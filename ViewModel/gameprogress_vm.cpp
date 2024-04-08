@@ -3,7 +3,8 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 #include <QDebug>
-
+#include <QDir>
+#include <QStandardPaths>
 GameProgress::GameProgress() : m_level(1), m_hp(100), m_def(10)
 {
 
@@ -46,7 +47,14 @@ void GameProgress::setDef(int def)
 
 bool GameProgress::saveToJson(const QString &fileName) const
 {
-    QFile saveFile(fileName);
+    QDir directory(saveDir);
+    if(!directory.exists()) {
+        if(!directory.mkpath(".")) {
+            qDebug() << "Failed to create log directory.";
+            return false;
+        }
+    }
+    QFile saveFile(saveDir+fileName);
     if (!saveFile.open(QIODevice::WriteOnly)) {
         qWarning("Couldn't open save file.");
         return false;
@@ -65,7 +73,7 @@ bool GameProgress::saveToJson(const QString &fileName) const
 
 bool GameProgress::loadFromJson(const QString &fileName)
 {
-    QFile loadFile(fileName);
+    QFile loadFile(saveDir+fileName);
     if (!loadFile.open(QIODevice::ReadOnly)) {
         qWarning("Couldn't open load file.");
         return false;
@@ -111,4 +119,4 @@ loadedGameProgress.loadFromJson("game_progress.json");
 qDebug() << "Loaded Level:" << loadedGameProgress.level();
 qDebug() << "Loaded HP:" << loadedGameProgress.hp();
 qDebug() << "Loaded DEF:" << loadedGameProgress.def();
-
+*/
