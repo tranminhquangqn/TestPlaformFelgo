@@ -33,7 +33,7 @@ public:
 
     QString m_saveName;
     QString m_sConfigPath=QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-    int m_nPort;
+    int m_ScreenWidth;
     bool m_bIsOnAllOverLay;
 
 protected:

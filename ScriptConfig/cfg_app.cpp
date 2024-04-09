@@ -38,7 +38,7 @@ void CfgApp::readFileConfig()
         QFile file(fileConfig);
         if(!file.exists()) {
             m_saveName                                = "Save 001";
-            m_nPort									  = 27025;
+            m_ScreenWidth									  = 27025;
             m_sConfigPath							  = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
             m_bIsOnAllOverLay						  = true;
             writeFileConfig();
@@ -52,13 +52,13 @@ void CfgApp::readFileConfig()
             QJsonDocument jsonDoc = QJsonDocument::fromJson(allData, &json_error);
             QJsonObject rootObj	  = jsonDoc.object();
 
-            m_saveName = rootObj.value("ServerName").toString();
+            m_saveName = rootObj.value("SaveName").toString();
             if(m_saveName == "")
                 m_saveName = "TomO-Streaming";
 
-            m_nPort = rootObj.value("Port").toInt();
-            if(m_nPort == 0)
-                m_nPort = 27025;
+            m_ScreenWidth = rootObj.value("Port").toInt();
+            if(m_ScreenWidth == 0)
+                m_ScreenWidth = 27025;
 
             m_sConfigPath = rootObj.value("ConfigPath").toString();
             if(m_sConfigPath == "")
@@ -84,8 +84,8 @@ void CfgApp::writeFileConfig()
 {
     //    QMutexLocker locker(&mutex);
     QJsonObject rootObj;
-    rootObj.insert("ServerName", QJsonValue::fromVariant(m_saveName));
-    rootObj.insert("Port", m_nPort);
+    rootObj.insert("SaveName", QJsonValue::fromVariant(m_saveName));
+    rootObj.insert("Port", m_ScreenWidth);
     rootObj.insert("ConfigPath", m_sConfigPath);
     rootObj.insert("IsOnAllOverLay", m_bIsOnAllOverLay);
 

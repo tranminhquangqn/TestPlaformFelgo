@@ -9,7 +9,7 @@ import "Component/MaterialDesign"
 Scene {
     id: gameScene
     gridSize: 32
-    property int offsetBeforeScrollingStarts: (gameWindow.screenWidth/2-player.width/2)/viewPortScale.viewScale
+    property int offsetBeforeScrollingStarts: (gameWindow.screenWidth/2-(player.width/viewPortScale.viewScale)/2)/viewPortScale.viewScale
 
     EntityManager {
         id: entityManager
@@ -212,9 +212,6 @@ Scene {
             xScale:viewScale
             yScale:viewScale
             Behavior on viewScale {NumberAnimation{ duration:180}}
-            onViewScaleChanged: {
-                console.log("\n scale "+viewScale)
-            }
         }
         x: player.x/viewPortScale.viewScale > offsetBeforeScrollingStarts? /*offsetBeforeScrollingStarts-(player.x/viewPortScale.viewScale)*/ 100 : 0
         PhysicsWorld {
@@ -236,13 +233,11 @@ Scene {
         Level1 {
             id: level
         }
-
         Player {
             id: player
             x: 20
             y: 100
         }
-
         ResetSensor {
             width: player.width
             height: 10
@@ -260,9 +255,7 @@ Scene {
             }
         }
     }
-
     Keys.forwardTo: controller
-
     TwoAxisController {
         id: controller
         onInputActionPressed: (actionName, isPressed) => {
@@ -290,7 +283,6 @@ Scene {
                 player.isProne=false
             }
         }
-
         inputActionsToKeyCode: {
             "up": Qt.Key_W,
             "down": Qt.Key_S,
