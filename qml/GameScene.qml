@@ -11,6 +11,9 @@ Scene {
     gridSize: 32
     property int offsetBeforeScrollingStarts: (gameWindow.screenWidth/2-(player.width/viewPortScale.viewScale)/2)/viewPortScale.viewScale
 
+
+    property int score: 0
+    property int life: 10
     EntityManager {
         id: entityManager
     }
@@ -142,7 +145,6 @@ Scene {
             }
         }
     }
-
     /////////////////////////////////////////
     ParallaxScrollingBackground {
         sourceImage: Qt.resolvedUrl("../assets/background/layer2.png")
@@ -213,7 +215,7 @@ Scene {
             yScale:viewScale
             Behavior on viewScale {NumberAnimation{ duration:180}}
         }
-        x: player.x/viewPortScale.viewScale > offsetBeforeScrollingStarts? /*offsetBeforeScrollingStarts-(player.x/viewPortScale.viewScale)*/ 100 : 0
+        x: player.x/viewPortScale.viewScale > offsetBeforeScrollingStarts? offsetBeforeScrollingStarts-(player.x/viewPortScale.viewScale) : 0
         PhysicsWorld {
             id: physicsWorld
             gravity: Qt.point(0, 30)
@@ -224,9 +226,7 @@ Scene {
                             var entityB = contact.fixtureB.getBody().target
                             if(entityB.entityType === "platform" && entityA.entityType === "player" &&
                                entityA.y + entityA.height > entityB.y) {
-                                //by setting enabled to false, they can be filtered out completely
-                                //-> disable cloud platform collisions when the player is below the platform
-                                contact.enabled = false
+                               contact.enabled = false
                             }
                         }
         }
@@ -275,6 +275,9 @@ Scene {
                                   }else if (actionName === "num2") {
                                       player.currentWeapon=2
                                   }
+                                  else if (actionName === "enter") {
+                                        popupMenuIg.show()
+                                  }
                               }
         onInputActionReleased: {
             if (actionName === "shift") {
@@ -293,7 +296,69 @@ Scene {
             "shift": Qt.Key_Shift,
             "ctrl": Qt.Key_Control,
             "num1": Qt.Key_1,
-            "num2": Qt.Key_2
+            "num2": Qt.Key_2,
+            "enter": Qt.Key_Enter
+        }
+    }
+    Popup{
+        id:popupMenuIg
+        width: 600
+        height: 500
+        Item{
+            anchors.fill: parent
+            Text{
+                text: "Load game"
+                color: "white"
+                font.pointSize: 20
+            }
+            ListModel{
+                id: saveList
+                ListElement{btnName:"Save 1";btnIcon:"alert-circle"}
+                ListElement{btnName:"Save 2";btnIcon:"alert-octagon"}
+                ListElement{btnName:"Save 3";btnIcon:"alert-decagram"}
+            }
+            ListView{
+                model: saveList
+                height: parent.height*0.3
+                width: parent.width
+                anchors.centerIn: parent
+                orientation : ListView.Horizontal
+                spacing:30
+                delegate: Item{
+                    id:popupBtnDele
+                    height: 170
+                    width: 160
+                    Rectangle{
+                        color: "blue"
+                        width: parent.width
+                        height: parent.height*0.8
+                        MaterialDesignIcon {
+                            name: btnIcon
+                            color: "white"
+                            size: 100
+                            anchors.centerIn: parent
+                        }
+                    }
+                    Text{
+                        anchors.bottom: parent.bottom
+                        text: btnName
+                        color:"white"
+                    }
+                    Behavior on scale {
+                        NumberAnimation { duration: 100 }
+                    }
+                    MouseArea{
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        onHoveredChanged: {
+                            if(containsMouse)
+                               popupBtnDele.scale=1.1
+                            else
+                               popupBtnDele.scale=1
+                        }
+                    }
+                }
+            }
         }
     }
 }

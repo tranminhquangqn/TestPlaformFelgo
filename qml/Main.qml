@@ -35,5 +35,12 @@ GameWindow {
             mainStackView.children[currentIndex].forceActiveFocus()
         }
     }
+    /*
+        player player   categories: Box.Category1
+        bullet         categories: Box.Category3  collidesWith: Box.Category2| Box.Category4
+        Blocker        categories: Box.Category2
+        Ground         categories: Box.Category2
+        Plaform        categories: Box.Category2
+    */
 }
 

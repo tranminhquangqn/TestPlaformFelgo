@@ -164,7 +164,9 @@ Scene {
                             width: 200
                             height: 40
                             wheelEnabled: true
-                            _model: ["960x640",
+                            property var listWidth: [960,1280,1920]
+                            property var listHeight: [540,720,1080]
+                            _model: ["960x540",
                                 "1280x720",
                                 "1920x1080"]
                             _bgCombobox: "#424242"
@@ -172,6 +174,10 @@ Scene {
                             _opacityPopup: 1.0
                             _fontSize: 14
                             modelDataColor: "white"
+                            onActivated: {
+                                console.log("\n "+listWidth[index]+" "+listHeight[index])
+                                optionSceneVM.setResolution(listWidth[index],listHeight[index])
+                            }
                         }
                     }
                 }

@@ -3,7 +3,7 @@ import QtQuick 2.0
 
 EntityBase {
     id: bullet
-    entityType: "bullet"
+    entityType: "ebullet"
     width: bulletType===1?10:50
     height: 10
     z:50
@@ -17,6 +17,7 @@ EntityBase {
         case 2:
             return 0.5
         default:
+            // code block
         }
     }
     rotation: Math.atan2(collider.linearVelocity.y, collider.linearVelocity.x) * 180 / Math.PI
@@ -32,6 +33,7 @@ EntityBase {
             case 2:
                 return "yellow"
             default:
+                // code block
             }
         }
         radius:width/2
@@ -48,11 +50,11 @@ EntityBase {
         categories: Box.Category3
         collidesWith: Box.Category2| Box.Category4
         fixture.onBeginContact: (other, contactNormal) => {
-            var otherEntity = other.getBody().target
-            if(otherEntity.entityType === "breakable") {
-                bullet.destroy()
-                otherEntity.hitted()
-            }
+//            var otherEntity = other.getBody().target
+//            if(otherEntity.entityType === "breakable") {
+//                bullet.destroy()
+//                otherEntity.hitted()
+//            }
         }
     }
     Timer {

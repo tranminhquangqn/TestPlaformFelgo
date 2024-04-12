@@ -5,8 +5,9 @@
 #include <QDir>
 #include <QStandardPaths>
 
-class GameProgress
+class GameProgress: public QObject
 {
+    Q_OBJECT
 public:
     GameProgress();
     GameProgress(int level, int hp, int def);

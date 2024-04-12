@@ -31,14 +31,10 @@ void CfgApp::readFileConfig()
         if(!QDir(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/TestSaveGame").exists()) {
             QDir().mkdir(QDir::homePath() + "/tomo_config");
         }
-
-        // Check file exits and file empyt
-//        fileConfig						  = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation)+"/ts_ui.json";
-//        m_sConfigPath = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
         QFile file(fileConfig);
         if(!file.exists()) {
-            m_saveName                                = "Save 001";
-            m_ScreenWidth									  = 27025;
+/*            m_saveName                                = "Save 001"*/;
+            m_ScreenWidth									  = 1280;
             m_sConfigPath							  = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
             m_bIsOnAllOverLay						  = true;
             writeFileConfig();
@@ -52,17 +48,17 @@ void CfgApp::readFileConfig()
             QJsonDocument jsonDoc = QJsonDocument::fromJson(allData, &json_error);
             QJsonObject rootObj	  = jsonDoc.object();
 
-            m_saveName = rootObj.value("SaveName").toString();
-            if(m_saveName == "")
-                m_saveName = "TomO-Streaming";
+//            m_saveName = rootObj.value("SaveName").toString();
+//            if(m_saveName == "")
+//                m_saveName = "TomO-Streaming";
 
-            m_ScreenWidth = rootObj.value("Port").toInt();
+            m_ScreenWidth = rootObj.value("ScreenWidth").toInt();
             if(m_ScreenWidth == 0)
-                m_ScreenWidth = 27025;
+                m_ScreenWidth = 1280;
+            m_ScreenHeight = rootObj.value("ScreenHeight").toInt();
+            if(m_ScreenHeight == 0)
+                m_ScreenHeight = 720;
 
-            m_sConfigPath = rootObj.value("ConfigPath").toString();
-            if(m_sConfigPath == "")
-                m_sConfigPath = QDir::homePath() + "/tomo_config/";
 
             m_bIsOnAllOverLay	= rootObj.value("IsOnAllOverLay").toBool();
         }
@@ -84,9 +80,9 @@ void CfgApp::writeFileConfig()
 {
     //    QMutexLocker locker(&mutex);
     QJsonObject rootObj;
-    rootObj.insert("SaveName", QJsonValue::fromVariant(m_saveName));
-    rootObj.insert("Port", m_ScreenWidth);
-    rootObj.insert("ConfigPath", m_sConfigPath);
+//    rootObj.insert("SaveName", QJsonValue::fromVariant(m_saveName));
+    rootObj.insert("ScreenWidth", m_ScreenWidth);
+    rootObj.insert("ScreenHeight", m_ScreenHeight);
     rootObj.insert("IsOnAllOverLay", m_bIsOnAllOverLay);
 
     QJsonDocument jsonDoc;

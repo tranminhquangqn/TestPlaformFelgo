@@ -50,6 +50,7 @@ EntityBase {
         id: collider
         height: parent.height
         width: 30
+        categories: Box.Category1
         anchors.horizontalCenter: parent.horizontalCenter
         // this collider must be dynamic because we are moving it by applying forces and impulses
         bodyType: Body.Dynamic // this is the default value but I wanted to mention it ;)
@@ -58,7 +59,6 @@ EntityBase {
         sleepingAllowed: false
         //    force: Qt.point(controller.xAxis*170*32,0)
         force: Qt.point(controller.xAxis * (player.boostSpeed ? 300 : 170) * 32, 0)
-        // limit the horizontal velocity
         onLinearVelocityChanged: {
             if(linearVelocity.x > (player.boostSpeed ? 300 : 170)) linearVelocity.x = (player.boostSpeed ? 300 : 170)
             if(linearVelocity.x < -(player.boostSpeed ? 300 : 170)) linearVelocity.x = -(player.boostSpeed ? 300 : 170)
@@ -73,7 +73,6 @@ EntityBase {
         repeat: true
         onTriggered: {
             var xAxis = controller.xAxis;
-            // if xAxis is 0 (no movement command) we slow the player down until he stops
             if(xAxis == 0) {
                 if(Math.abs(player.horizontalVelocity) > 10) player.horizontalVelocity /= xAccelerate
                 else player.horizontalVelocity = 0
@@ -122,7 +121,6 @@ EntityBase {
             shotSpeed = 1500 //Rkman
             break;
 //        default:
-            // code block
         }
         if (bulletComponent.status === Component.Ready) {
             var bullet = bulletComponent.createObject(viewPort,{bulletType:currentWeapon})

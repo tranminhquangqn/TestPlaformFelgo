@@ -3,13 +3,18 @@
 
 #include <QObject>
 #include "master_app.h"
-class OptionScene_VM
+class OptionScene_VM: public QObject
 {
+    Q_OBJECT
 public:
-    OptionScene_VM();
+    explicit OptionScene_VM(MasterApp* masterApp, QObject* parent = nullptr);
     ~OptionScene_VM();
 private:
     MasterApp* master_app;
+Q_SIGNALS:
+//	void sendCurrentValueSlider(double);
+public Q_SLOTS:
+    void setResolution(int, int);
 
 };
 

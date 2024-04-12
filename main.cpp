@@ -29,6 +29,9 @@ int main(int argc, char *argv[])
 
     MainVM mainVM(&app, argc, argv);
     engine.rootContext()->setContextProperty(QStringLiteral("mainVM"), &mainVM);
+    engine.rootContext()->setContextProperty(QStringLiteral("masterAppVM"), mainVM.master_app.data());
+    engine.rootContext()->setContextProperty(QStringLiteral("gameProgressVM"), mainVM.gameProgress.data());
+    engine.rootContext()->setContextProperty(QStringLiteral("optionSceneVM"), mainVM.optionsceneVM.data());
 
     // use this during development
     // for PUBLISHING, use the entry point below
