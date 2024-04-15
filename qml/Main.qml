@@ -16,12 +16,15 @@ GameWindow {
     // the content of the logical scene size (480x320 for landscape mode by default) gets scaled to the window size based on the scaleMode
     // you can set this size to any resolution you would like your project to start with, most of the times the one of your main target device
     activeScene: gameScene
-    screenWidth: 400
-    screenHeight: 300
+    screenWidth: 200
+    screenHeight: 200
     StackLayout {
         id:mainStackView
         anchors.fill: parent
         currentIndex: 0
+        Rectangle{
+            color:"black"
+        }
         MainMenu{
             id:mainMenu
         }

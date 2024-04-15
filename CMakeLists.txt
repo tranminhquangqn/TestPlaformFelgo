@@ -36,6 +36,8 @@ qt_add_executable(appNewPlaform
     main.cpp
     ViewModel/main_vm.cpp
     ViewModel/master_app.cpp
+    ViewModel/gameprogress_vm.cpp
+    ViewModel/optionscene_vm.cpp
     ScriptConfig/cfg_app.cpp
     qml.qrc
     ${QmlFiles}

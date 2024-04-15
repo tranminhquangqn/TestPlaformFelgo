@@ -9,20 +9,12 @@
 CfgApp::CfgApp()
 {
     readFileConfig();
-//    this->initVariable();
 }
 
 CfgApp::~CfgApp()
 {
     this->writeFileConfig();
 }
-//void CfgApp::initVariable()
-//{
-//    status_btn_on_systembar[SYSTEM_BAR_BUTTON::OVERLAY_BTN]	 = m_bIsOnAllOverLay;
-//    status_btn_on_systembar[SYSTEM_BAR_BUTTON::DEFECT_BTN]	 = m_bIsOnDefect;
-//    status_btn_on_systembar[SYSTEM_BAR_BUTTON::OVERKILL_BTN] = m_bIsOnOverKill;
-//    status_btn_on_systembar[SYSTEM_BAR_BUTTON::TRACKING_BTN] = m_bIsOnTracking;
-//}
 
 void CfgApp::readFileConfig()
 {
@@ -35,8 +27,9 @@ void CfgApp::readFileConfig()
         if(!file.exists()) {
 /*            m_saveName                                = "Save 001"*/;
             m_ScreenWidth									  = 1280;
-            m_sConfigPath							  = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
-            m_bIsOnAllOverLay						  = true;
+            m_ScreenHeight									  = 720;
+            m_GeneralVolume                                   = 0;
+            m_isFullScreen                                	  = false;
             writeFileConfig();
             return;
         }
@@ -53,28 +46,21 @@ void CfgApp::readFileConfig()
 //                m_saveName = "TomO-Streaming";
 
             m_ScreenWidth = rootObj.value("ScreenWidth").toInt();
-            if(m_ScreenWidth == 0)
+            if(m_ScreenWidth < 0 || m_ScreenWidth > 2000)
                 m_ScreenWidth = 1280;
             m_ScreenHeight = rootObj.value("ScreenHeight").toInt();
-            if(m_ScreenHeight == 0)
+            if(m_ScreenHeight < 0 || m_ScreenHeight > 1500)
                 m_ScreenHeight = 720;
-
-
-            m_bIsOnAllOverLay	= rootObj.value("IsOnAllOverLay").toBool();
+            m_GeneralVolume = rootObj.value("ScreenHeight").toInt();
+            if(m_GeneralVolume < 0 || m_GeneralVolume > 100)
+                m_GeneralVolume = 0;
+            m_isFullScreen	= rootObj.value("IsFullScreen").toBool();
         }
     }
     catch(const std::exception& e) {
         qDebug() << "Error when read file application config" << QString::fromStdString(e.what());
     }
 }
-
-////void MasterApp::setAfterUiCreated()
-////{
-////    Q_EMIT initAllOverlayBtn(m_bIsOnAllOverLay);
-////    Q_EMIT initDefectBtn(m_bIsOnDefect);
-////    Q_EMIT initOverKillBtn(m_bIsOnOverKill);
-////    Q_EMIT initTrackingBtn(m_bIsOnTracking);
-////}
 
 void CfgApp::writeFileConfig()
 {
@@ -83,7 +69,8 @@ void CfgApp::writeFileConfig()
 //    rootObj.insert("SaveName", QJsonValue::fromVariant(m_saveName));
     rootObj.insert("ScreenWidth", m_ScreenWidth);
     rootObj.insert("ScreenHeight", m_ScreenHeight);
-    rootObj.insert("IsOnAllOverLay", m_bIsOnAllOverLay);
+    rootObj.insert("GeneralVolume", m_GeneralVolume);
+    rootObj.insert("IsFullScreen", m_isFullScreen);
 
     QJsonDocument jsonDoc;
     jsonDoc.setObject(rootObj);
@@ -96,4 +83,46 @@ void CfgApp::writeFileConfig()
     QTextStream out(&file);
     out << byteArray;
     file.close();
+}
+
+//***********************************************
+void CfgApp::setScreenWidth(int value)
+{
+    if(value != m_ScreenWidth) {
+        m_ScreenWidth = value;
+    }
+}
+void CfgApp::setScreenHeight(int value)
+{
+    if(value != m_ScreenHeight) {
+        m_ScreenHeight = value;
+    }
+}
+void CfgApp::setGeneralVolume(int value)
+{
+    if(value != m_GeneralVolume) {
+        m_GeneralVolume = value;
+    }
+}
+void CfgApp::setIsFullScreen(bool value)
+{
+    if(value != m_isFullScreen) {
+        m_isFullScreen = value;
+    }
+}
+int CfgApp::screenWidth()
+{
+    return m_ScreenWidth;
+}
+int CfgApp::screenHeight()
+{
+    return m_ScreenHeight;
+}
+int CfgApp::generalVolume()
+{
+    return m_GeneralVolume;
+}
+int CfgApp::isFullScreen()
+{
+    return m_isFullScreen;
 }

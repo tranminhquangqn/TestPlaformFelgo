@@ -15,9 +15,9 @@ public:
     MainVM(QApplication* app, int argc, char** argv, QObject* parent = nullptr);
     ~MainVM();
     QSharedPointer<MasterApp> master_app;
-    QScopedPointer<GameProgress> gameProgress;
+    QScopedPointer<GameProgress> gameProgressVM;
     QScopedPointer<OptionScene_VM> optionsceneVM;
-    \
+
 public slots:
 };
 #endif // MAIN_VM_H

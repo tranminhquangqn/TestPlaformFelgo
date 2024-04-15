@@ -2,6 +2,7 @@
 #define MASTER_APP_H
 
 #include <QObject>
+#include <QSharedPointer>
 #include "../ScriptConfig/cfg_app.h"
 class MasterApp : public QObject
 {
@@ -12,6 +13,8 @@ public:
     ~MasterApp();
 
     CfgApp config;
+    QScopedPointer<CfgApp> cfgApp;
+    void initApp();
 };
 
 #endif // MASTER_APP_H
